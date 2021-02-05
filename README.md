@@ -1,3 +1,10 @@
+# ------------ local Build & Deploy to OpenShift
+1. oc login --token...
+2. from project root issue PowerShell:
+./mvnw clean package "-Dmaven.test.skip=true" "-Dquarkus.kubernetes.deploy=true"
+
+# ------------------------------------------
+
 # getting-started project
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
