@@ -1,0 +1,11 @@
+[
+    {
+        "name" : "<class_package.class_name>",
+        "allDeclaredConstructors" : true,
+        "allPublicConstructors" : true,
+        "allDeclaredMethods" : true,
+        "allPublicMethods" : true,
+        "allDeclaredFields" : true,
+        "allPublicFields" : true
+    }
+]

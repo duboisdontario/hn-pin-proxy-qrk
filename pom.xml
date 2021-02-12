@@ -131,6 +131,8 @@
       </build>
       <properties>
         <quarkus.package.type>native</quarkus.package.type>
+        <!-- native build requires reflection of app class CDI -->
+        <!-- quarkus.native.additional-build-args>-H:ReflectionConfigurationFiles=reflection-config.json</quarkus.native.additional-build-args -->        
       </properties>
     </profile>
   </profiles>
