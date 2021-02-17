@@ -14,8 +14,10 @@ NOTE: If you run multiple apps locally be sure to use "-Ddebug=5006" switch to a
 
 # RUN Config - environment variables MUST be set in application.properties or passed as -D switch variables using the keys below:
 DB2_ENDPOINT = DB2 service endpoint.
-DB2_UID - DB2 RACF ID
-DB2_PWD - DB2 RACF password
+
+DB2_UID - DB2 RACF ID.
+
+DB2_PWD - DB2 RACF password.
 
 Local testing - pass these in as -D switch variables when issuing 'mvnw clean quarkus:dev'.
 OpenShift deployment - pass these in as -p switch variables when issuing 'oc new-app...'.
