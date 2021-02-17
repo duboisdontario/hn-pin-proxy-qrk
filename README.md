@@ -1,6 +1,6 @@
-# Service Dependencies
+## Service Dependencies
 ++++++++++++++++++++++++++++++
-## Dependent services
+# Dependent services
 This service relies on two REST services:
 - *TBD* DB2 REST service.
 Ensure these are working before testing this service.
@@ -20,7 +20,7 @@ DB2_PWD - DB2 RACF password
 Local testing - pass these in as -D switch variables when issuing 'mvnw clean quarkus:dev'.
 OpenShift deployment - pass these in as -p switch variables when issuing 'oc new-app...'.
 
-## Creating a native executable
+## Creating a native OpenShift image
 https://quarkus.io/guides/maven-tooling.html.
 # building native - CDI requirements
 Ensure the pom.xml has a 'native' property
@@ -34,15 +34,13 @@ Once local testing is complete build a native image for OpenShift.
 ```shell script
 oc login --token...
 ```
-2. from project root issue PowerShell:
+2. from project root issue native build command:
 ```shell script
 mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
 ```
-Note: PowerShell requires quotes around -D switches.  Example:
-./mvnw package -Pnative "-Dquarkus.native.container-build=true" "-Dquarkus.container-image.build=true"
+Note: PowerShell requires quotes around -D switches.  Example: ./mvnw package -Pnative "-Dquarkus.native.container-build=true" "-Dquarkus.container-image.build=true"
 
 Quarkus images - https://quarkus.io/guides/container-image#s2i
-
 OpenShift Client (oc) commands - https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/developer-cli-commands.html
 
 # --------------- OpenShift create app and deploy
