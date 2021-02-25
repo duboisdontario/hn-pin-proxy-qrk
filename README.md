@@ -27,6 +27,7 @@ https://quarkus.io/guides/maven-tooling.html.
 # building native - CDI requirements
 Ensure the pom.xml has a 'native' property
 <quarkus.native.additional-build-args>-H:ReflectionConfigurationFiles=reflection-config.json</quarkus.native.additional-build-args>
+
 When you build natively for OpenShift you must add class config to reflection-config.json for CDI to work.
 Also, default interface methods don't work so you must make them 'public static'.
 
@@ -38,9 +39,9 @@ oc login --token...
 ```
 2. from project root issue native build command:
 ```shell script
-mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
+mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
 ```
-Note: PowerShell requires quotes around -D switches.  Example: ./mvnw package -Pnative "-Dquarkus.native.container-build=true" "-Dquarkus.container-image.build=true"
+Note: PowerShell requires quotes around -D switches.
 
 Quarkus images - https://quarkus.io/guides/container-image#s2i
 OpenShift Client (oc) commands - https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/developer-cli-commands.html
@@ -53,16 +54,16 @@ If an application (service, deployment, route) doesn't exist perform the followi
 ```shell script
 oc get is
 (make note of the image name for use in 'oc new-app' command below)
+```
+Create a service if it doesnt exist...!!! BE SURE TO PASS ENV VARIABLES IN USING -p SWITCHES)
+```shell script
+oc new-app --name=<artifactId> --image-stream="<artifactId>:<tag>"
 oc get svc
-oc get pod
-(if service doesnt exist create a new app...!!! BE SURE TO PASS ENV VARIABLES IN USING -p SWITCHES)
-oc new-app --name=<artifactId> --image-stream="<artifactId>:1.0"
-oc get is
 ```
 4. create route
 ```shell script
 oc expose svc <artifactId>
-oc status
+oc describe svc <artifactId>
 ```
 
 5. edit route to use TLS
@@ -76,6 +77,12 @@ oc patch route <artifactId> -p "{\"spec\":{\"tls\":{\"termination\":\"edge\"}}}"
 ```shell script
 oc get -o yaml is,bc,dc,svc,route,pvc -l app=<label>  >  <servicename>_dev.yaml
 ```        
+
+# Push local image to OpenShift imageStream
+```shell script
+docker push default-route-openshift-image-registry.apps.ocp2.pc.uat.ocp.gocloud.gov.on.ca/prsoocpa-0000-dev/hn-pin-proxy:<tag>
+```
+
 # ------------------------------------------
 Building+Deployment - https://redhat-developer-demos.github.io/quarkus-tutorial/quarkus-tutorial/basics.html
 
