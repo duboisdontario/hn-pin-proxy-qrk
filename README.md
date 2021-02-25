@@ -5,10 +5,13 @@ This service relies on two REST services:
 - *TBD* DB2 REST service.
 Ensure these are working before testing this service.
 
+# Windows command synatx (cmd)
+Note: The following scripts use Windows command. For PowerShell prefix commands using ./ syntax and wrap switch arguments in double quotes.
+
 ## Local development - Running the application in dev mode
 You can run your application in dev mode that enables live coding using:
 ```shell script
-./mvnw compile quarkus:dev
+mvnw compile quarkus:dev
 ```
 NOTE: If you run multiple apps locally be sure to use "-Ddebug=5006" switch to avoid debug collision.
 
@@ -26,8 +29,9 @@ OpenShift deployment - pass these in as -p switch variables when issuing 'oc new
 https://quarkus.io/guides/maven-tooling.html.
 # building native - CDI requirements
 Ensure the pom.xml has a 'native' property
+```shell script
 <quarkus.native.additional-build-args>-H:ReflectionConfigurationFiles=reflection-config.json</quarkus.native.additional-build-args>
-
+```
 When you build natively for OpenShift you must add class config to reflection-config.json for CDI to work.
 Also, default interface methods don't work so you must make them 'public static'.
 
@@ -39,7 +43,7 @@ oc login --token...
 ```
 2. from project root issue native build command:
 ```shell script
-mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
+mvnw clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
 ```
 Note: PowerShell requires quotes around -D switches.
 
@@ -53,8 +57,9 @@ If an application (service, deployment, route) doesn't exist perform the followi
 (be sure to 'oc login' using a valid token and set the correct project/namespace)
 ```shell script
 oc get is
-(make note of the image name for use in 'oc new-app' command below)
 ```
+(make note of the image name for use in 'oc new-app' command below)
+
 Create a service if it doesnt exist...!!! BE SURE TO PASS ENV VARIABLES IN USING -p SWITCHES)
 ```shell script
 oc new-app --name=<artifactId> --image-stream="<artifactId>:<tag>"
